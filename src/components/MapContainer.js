@@ -82,6 +82,26 @@ class ConnectedMap extends Component {
     }
   }
 
+  renderMarkers = arr => {
+    return arr.map(e => (
+      <Marker
+        style={{color: 'blue'}}
+        title={e.description}
+        position={{lat: e.lat, lng: e.lng}}
+      />
+    ));
+  }
+
+  filterPlaces = () => {
+    const {state} = this.props;
+    if (state.highlighted) {
+      const list = state.places.filter(e => e.id === state.highlighted);
+      return this.renderMarkers(list);
+    } else {
+      return this.renderMarkers(state.places);
+    }
+  }
+
   //diagnostics
   componentDidUpdate() {
     // console.log('State', this.props.state)
@@ -97,18 +117,7 @@ class ConnectedMap extends Component {
         onClick={this.handleClick}
       >
         {showForm ? this.drawDiv() : 0}
-        {this.props.state.places.map(e => (
-          <Marker
-            style={{color: 'blue'}}
-            title={e.description}
-            position={{lat: e.lat, lng: e.lng}}
-            // icon={{
-            //   url: e.visited ? '../assets/blue-pin.png' : '../assets/pink-pin.png',
-            //   anchor: new google.maps.Point(e.lat, e.lng),
-            //   scaledSize: new google.maps.Size(150, 150)
-            // }}
-          />
-        ))}
+        {this.filterPlaces()}
       </Map>
     );
   }

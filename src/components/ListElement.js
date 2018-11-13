@@ -4,7 +4,7 @@ import ActionCreators from '../redux/actions';
 
 const styles = {
   cont: {
-    width: '100%',
+    width: '98%',
     display: 'flex',
     alignItems: 'center',
     borderColor: '#456288',

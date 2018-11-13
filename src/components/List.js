@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import ActionCreators from '../redux/actions';
 import ListElement from './ListElement';
+import ListFilter from './ListFilter';
 
 const mapStateToProps = state => ({state});
 const mapDispatchToProps = dispatch => ({
@@ -30,6 +31,7 @@ class ConnectedList extends Component {
   render = () => (
     <div id="list" style={styles.listCont}>
       <h1 style={styles.header}>List of ToGo locations</h1>
+      <ListFilter />
       <ul style={styles.list}>
         {this.props.state.places.map(e => (
           <ListElement
