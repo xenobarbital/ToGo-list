@@ -30,6 +30,12 @@ class ConnectedFilterList extends Component {
     console.log('Key', state);
   }
 
+  handleFilter = e => {
+    const {state, filterByStatus} = this.props;
+    filterByStatus(e.target.value);
+    console.log('Filter', state);
+  }
+
   render = () => {
     return (
       <div style={styles.cont}>
