@@ -33,7 +33,6 @@ export default class ActionCreators {
   }
 
   static filterByKey(filter) {
-    console.log('ololo');
     return {type: FILTER_BY_KEY, filter}
   }
 }

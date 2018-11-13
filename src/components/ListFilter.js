@@ -7,7 +7,7 @@ const {SHOW_ALL, SHOW_VISITED, SHOW_UNVISITED} = VisibilityFilters;
 const mapStateToProps = state => ({state});
 const mapDispatchToProps = dispatch => ({
   filterByStatus: filter => ActionCreators.filterByStatus(filter),
-  filterByKey: filter => ActionCreators.filterByKey(filter)
+  filterByKey: key => ActionCreators.filterByKey(key)
 });
 
 const styles = {
