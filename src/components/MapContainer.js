@@ -1,24 +1,13 @@
 import React, { Component } from 'react';
-import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import {Map, Marker, GoogleApiWrapper} from 'google-maps-react';
 import {connect} from 'react-redux';
 import ActionCreators from '../redux/actions';
 import uuidv1 from 'uuid/v1';
 
 const mapStateToProps = state => ({state});
-
 const mapDispatchToProps = dispatch => ({
   addPlace: place => dispatch(ActionCreators.addPlace(place)),
 });
-
-const styles = {
-  map: {
-    height: '100vh',
-    width: '60vw'
-  },
-  form: {
-    position: 'absolute'
-  }
-}
 
 class ConnectedMap extends Component {
   constructor() {
@@ -68,18 +57,35 @@ class ConnectedMap extends Component {
   }
 
   handleChange = e => {
-
+    this.setState({value: e.target.value});
   }
 
   handleSubmit = e => {
     e.preventDefault();
+    if (this.state.value){
+      const place = {
+        description: this.state.value,
+        id: uuidv1(),
+        visited: false
+      };
+      this.props.addPlace(place);
+      this.setState({
+        showForm: false,
+        value: ''
+      })
+    }
+  }
+
+  //diagnostics
+  componentDidUpdate() {
+    console.log('State', this.props.state)
   }
 
   render = () => {
     const {showForm} = this.state;
     return (
       <Map
-        style={styles.map}
+        // style={styles.map}
         google={this.props.google}
         zoom={14}
         onClick={this.handleClick}
