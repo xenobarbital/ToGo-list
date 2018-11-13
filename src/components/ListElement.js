@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import ActionCreators from '../redux/actions';
 
 const styles = {
   cont: {
@@ -18,7 +20,14 @@ const styles = {
   }
 }
 
-export default class ListElement extends Component {
+const mapStateToProps = state => ({state});
+const mapDispatchToProps = dispatch => ({
+  removePlace: id => dispatch(ActionCreators.removePlace(id)),
+  toggleVisited: id => dispatch(ActionCreators.toggleVisited(id)),
+  highlightPlace: id => dispatch(ActionCreators.highlightPlace(id)),
+})
+
+class ConnectedListElement extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -26,27 +35,45 @@ export default class ListElement extends Component {
     }
   }
 
-  handleChange = () => {
-    this.setState({visited: !this.state.visited});
+  handleToggle = () => {
+    const {toggleVisited} = this.props;
+    this.setState({visited: !this.state.visited}, () => {
+      toggleVisited(this.props.id);
+    });
   }
 
   handleHighlight = () => {
-    console.log('Highlighted!');
+    const {state, highlightPlace, id} = this.props;
+    if (state.highlighted) {
+      highlightPlace('');
+    } else {
+      highlightPlace(id);
+    }
   }
 
   handleDelete = () => {
-    console.log('Deleted');
+    const {removePlace} = this.props;
+    removePlace(this.props.id);
+  }
+
+  generateColor = () => {
+    const {state, id} = this.props;
+    console.log(state.highlighted, id);
+    return state.highlighted === id ? '#999' : '#fff'
   }
 
   render = () => (
-    <li>
+    <li style={{backgroundColor: this.generateColor()}}>
       <div style={styles.cont}>
         <div><input
           type="checkbox"
           checked={this.state.visited}
-          onChange={this.handleChange}
+          onChange={this.handleToggle}
         /></div>
-        <div style={styles.textCont} onClick={this.handleHighlight}>
+        <div
+          style={styles.textCont}
+          onClick={this.handleHighlight}
+        >
           {this.props.description}
         </div>
         <div><button onClick={this.handleDelete}>Delete</button></div>
@@ -54,3 +81,6 @@ export default class ListElement extends Component {
     </li>
   )
 }
+
+const ListElement = connect(mapStateToProps, mapDispatchToProps)(ConnectedListElement);
+export default ListElement;

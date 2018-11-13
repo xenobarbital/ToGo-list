@@ -15,6 +15,8 @@ class ConnectedMap extends Component {
     this.state = {
       showForm: false,
       clickPoint: {},
+      lat: 0,
+      lng: 0,
       value: ''
     }
   }
@@ -42,16 +44,18 @@ class ConnectedMap extends Component {
   }
 
   handleClick = (p, m, e) => {
-    console.log('Event!', e.oa, e.pixel);
     if (!this.state.showForm) {
       this.setState({
         showForm: true,
         clickPoint: {...e.pixel},
+        lat: e.latLng.lat(),
+        lng: e.latLng.lng(),
       })
     } else {
       this.setState({
         showForm: false,
-        clickPoint: {}
+        clickPoint: {},
+        clickLocation: {}
       })
     }
   }
@@ -65,6 +69,8 @@ class ConnectedMap extends Component {
     if (this.state.value){
       const place = {
         description: this.state.value,
+        lng: this.state.lng,
+        lat: this.state.lat,
         id: uuidv1(),
         visited: false
       };
@@ -78,19 +84,31 @@ class ConnectedMap extends Component {
 
   //diagnostics
   componentDidUpdate() {
-    console.log('State', this.props.state)
+    // console.log('State', this.props.state)
   }
 
   render = () => {
     const {showForm} = this.state;
+    // const {google} = this.props;
     return (
       <Map
-        // style={styles.map}
         google={this.props.google}
         zoom={14}
         onClick={this.handleClick}
       >
         {showForm ? this.drawDiv() : 0}
+        {this.props.state.places.map(e => (
+          <Marker
+            style={{color: 'blue'}}
+            title={e.description}
+            position={{lat: e.lat, lng: e.lng}}
+            // icon={{
+            //   url: e.visited ? '../assets/blue-pin.png' : '../assets/pink-pin.png',
+            //   anchor: new google.maps.Point(e.lat, e.lng),
+            //   scaledSize: new google.maps.Size(150, 150)
+            // }}
+          />
+        ))}
       </Map>
     );
   }

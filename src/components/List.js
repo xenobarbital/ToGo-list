@@ -32,10 +32,11 @@ class ConnectedList extends Component {
       <h1 style={styles.header}>List of ToGo locations</h1>
       <ul style={styles.list}>
         {this.props.state.places.map(e => (
-          // <li>{e.description}</li>
           <ListElement
             description={e.description}
             visited={e.visited}
+            id={e.id}
+            key={e.id}
           />
         ))}
       </ul>
