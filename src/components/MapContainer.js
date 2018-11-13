@@ -102,11 +102,6 @@ class ConnectedMap extends Component {
     }
   }
 
-  //diagnostics
-  componentDidUpdate() {
-    // console.log('State', this.props.state)
-  }
-
   render = () => {
     const {showForm} = this.state;
     // const {google} = this.props;

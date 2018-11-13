@@ -58,7 +58,6 @@ class ConnectedListElement extends Component {
 
   generateColor = () => {
     const {state, id} = this.props;
-    console.log(state.highlighted, id);
     return state.highlighted === id ? '#999' : '#fff'
   }
 

@@ -19,11 +19,22 @@ const styles = {
 }
 
 class ConnectedFilterList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {}
+  }
+
+  handleKey = e => {
+    const {state, filterByKey} = this.props;
+    filterByKey(e.target.value);
+    console.log('Key', state);
+  }
+
   render = () => {
     return (
       <div style={styles.cont}>
-        <input type="text" placeholder="Filter by name"/>
-        <select>
+        <input onChange={this.handleKey} type="text" placeholder="Filter by name"/>
+        <select onChange={this.handleFilter}>
           <option value={SHOW_ALL}>Show all</option>
           <option value={SHOW_VISITED}>Show visited</option>
           <option value={SHOW_UNVISITED}>Show unvisited</option>
