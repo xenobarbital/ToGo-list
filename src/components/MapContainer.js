@@ -8,8 +8,9 @@ const mapStateToProps = state => ({state});
 const mapDispatchToProps = dispatch => ({
   addPlace: place => dispatch(ActionCreators.addPlace(place)),
 });
-const {SHOW_ALL, SHOW_VISITED, SHOW_UNVISITED} = VisibilityFilters;
+const {SHOW_ALL, SHOW_VISITED} = VisibilityFilters;
 
+// Map rendering component
 class ConnectedMap extends Component {
   constructor() {
     super();
@@ -22,6 +23,7 @@ class ConnectedMap extends Component {
     }
   }
 
+  // renders input form over the map
   drawDiv = () => {
     const {clickPoint} = this.state;
     return (
@@ -44,6 +46,7 @@ class ConnectedMap extends Component {
     )
   }
 
+  // handles mouse click on the map
   handleClick = (p, m, e) => {
     if (!this.state.showForm) {
       this.setState({
@@ -65,6 +68,7 @@ class ConnectedMap extends Component {
     this.setState({value: e.target.value});
   }
 
+  // creates new entry in the list of places
   handleSubmit = e => {
     e.preventDefault();
     if (this.state.value){
@@ -94,6 +98,7 @@ class ConnectedMap extends Component {
     ));
   }
 
+  // applies display filters
   filterPlaces = () => {
     const {state} = this.props;
     if (state.highlighted) {
