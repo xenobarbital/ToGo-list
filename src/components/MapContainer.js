@@ -98,6 +98,11 @@ class ConnectedMap extends Component {
     if (state.highlighted) {
       const list = state.places.filter(e => e.id === state.highlighted);
       return this.renderMarkers(list);
+    } else if (state.filterKey) {
+      const list = state.places.filter(e => {
+        return e.description.includes(state.filterKey)
+      });
+      return this.renderMarkers(list);
     } else {
       return this.renderMarkers(state.places);
     }

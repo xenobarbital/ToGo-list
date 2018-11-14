@@ -39,7 +39,12 @@ class ConnectedFilterList extends Component {
   render = () => {
     return (
       <div style={styles.cont}>
-        <input onChange={this.handleKey} type="text" placeholder="Filter by name"/>
+        <input
+          onChange={this.handleKey}
+          type="text"
+          placeholder="Filter by name"
+          value={this.props.state.filterKey}
+        />
         <select onChange={this.handleFilter}>
           <option value={SHOW_ALL}>Show all</option>
           <option value={SHOW_VISITED}>Show visited</option>
