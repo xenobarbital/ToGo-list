@@ -17,7 +17,7 @@ const styles = {
     flex: 1,
     overflow: 'hidden',
     cursor: 'pointer'
-  }
+  },
 }
 
 const mapStateToProps = state => ({state});
@@ -64,11 +64,14 @@ class ConnectedListElement extends Component {
   render = () => (
     <li style={{backgroundColor: this.generateColor()}}>
       <div style={styles.cont}>
-        <div><input
-          type="checkbox"
-          checked={this.state.visited}
-          onChange={this.handleToggle}
-        /></div>
+        <div className="tooltip">
+          <input
+            type="checkbox"
+            checked={this.state.visited}
+            onChange={this.handleToggle}
+          />
+          <span className="tooltiptext">Mark as visited</span>
+        </div>
         <div
           style={styles.textCont}
           onClick={this.handleHighlight}
