@@ -1,3 +1,7 @@
+### Description
+
+A prototype application, that allows you to pick various points of interest on the map.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
