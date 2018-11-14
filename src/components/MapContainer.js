@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import {Map, Marker, GoogleApiWrapper} from 'google-maps-react';
 import {connect} from 'react-redux';
-import ActionCreators from '../redux/actions';
+import ActionCreators, {VisibilityFilters} from '../redux/actions';
 import uuidv1 from 'uuid/v1';
 
 const mapStateToProps = state => ({state});
 const mapDispatchToProps = dispatch => ({
   addPlace: place => dispatch(ActionCreators.addPlace(place)),
 });
+const {SHOW_ALL, SHOW_VISITED, SHOW_UNVISITED} = VisibilityFilters;
 
 class ConnectedMap extends Component {
   constructor() {
@@ -101,6 +102,14 @@ class ConnectedMap extends Component {
     } else if (state.filterKey) {
       const list = state.places.filter(e => {
         return e.description.includes(state.filterKey)
+      });
+      return this.renderMarkers(list);
+    } else if (state.visibilityFilter !== SHOW_ALL) {
+      const list = state.places.filter(e => {
+        if (state.visibilityFilter === SHOW_VISITED) {
+          return e.visited;
+        }
+        return !e.visited;
       });
       return this.renderMarkers(list);
     } else {

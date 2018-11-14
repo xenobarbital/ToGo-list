@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import ActionCreators, {VisibilityFilters} from '../redux/actions';
 
-const {SHOW_ALL, SHOW_VISITED, SHOW_UNVISITED} = VisibilityFilters;
-
 const mapStateToProps = state => ({state});
 const mapDispatchToProps = dispatch => ({
   filterByStatus: filter => dispatch(ActionCreators.filterByStatus(filter)),
   filterByKey: key => dispatch(ActionCreators.filterByKey(key))
 });
+const {SHOW_ALL, SHOW_VISITED, SHOW_UNVISITED} = VisibilityFilters;
 
 const styles = {
   cont: {
@@ -25,9 +24,8 @@ class ConnectedFilterList extends Component {
   }
 
   handleKey = e => {
-    const {state, filterByKey} = this.props;
+    const {filterByKey} = this.props;
     filterByKey(e.target.value);
-    console.log('Key', state);
   }
 
   handleFilter = e => {
@@ -45,7 +43,7 @@ class ConnectedFilterList extends Component {
           placeholder="Filter by name"
           value={this.props.state.filterKey}
         />
-        <select onChange={this.handleFilter}>
+        <select value={this.props.state.visibilityFilter} onChange={this.handleFilter}>
           <option value={SHOW_ALL}>Show all</option>
           <option value={SHOW_VISITED}>Show visited</option>
           <option value={SHOW_UNVISITED}>Show unvisited</option>
