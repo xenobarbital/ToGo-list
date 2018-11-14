@@ -78,7 +78,7 @@ class ConnectedMap extends Component {
       this.setState({
         showForm: false,
         value: ''
-      })
+      }, () => console.log('State updated', this.props.state))
     }
   }
 
@@ -88,6 +88,7 @@ class ConnectedMap extends Component {
         style={{color: 'blue'}}
         title={e.description}
         position={{lat: e.lat, lng: e.lng}}
+        key={e.id}
       />
     ));
   }
